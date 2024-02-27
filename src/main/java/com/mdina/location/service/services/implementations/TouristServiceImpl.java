@@ -10,6 +10,8 @@ import com.mdina.location.service.services.interfaces.ITouristService;
 import com.mdina.location.service.services.interfaces.IFileService;
 import com.mdina.location.service.mappers.TouristSiteMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,8 @@ public class TouristServiceImpl implements ITouristService {
     private final TouristSiteMapper mapper;
 
     @Override
-    public List<TouristSite> getAll() {
-        return touristSiteRepository.findAll();
+    public Page<TouristSite> getPage(int page, int size) {
+        return touristSiteRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override

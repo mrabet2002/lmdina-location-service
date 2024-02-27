@@ -27,6 +27,23 @@ public class FileServiceImpl implements IFileService {
 
     @Override
     public File uploadFile(MultipartFile multipartFile) {
+        // Get the file type
+        String mimeType = multipartFile.getContentType();
+
+        // Map the MIME type to FileType
+        FileType fileType = mapMimeTypeToFileType(mimeType);
+
+        // Create a new File object
+        File file = new File();
+        file.setUrl(uploadToFileSystem(multipartFile)); // Set the file URL
+        file.setType(fileType); // Set the file type
+
+        // Save the File object to the database
+        return file;
+    }
+
+    @Override
+    public String uploadToFileSystem(MultipartFile multipartFile) {
         try {
             // Get the file's original filename
             String originalFilename = multipartFile.getOriginalFilename();
@@ -40,19 +57,7 @@ public class FileServiceImpl implements IFileService {
             // Write the file to your local file system and get the path
             Path path = writeToFileSystem(bytes, newFileName);
 
-            // Get the file type
-            String mimeType = multipartFile.getContentType();
-
-            // Map the MIME type to FileType
-            FileType fileType = mapMimeTypeToFileType(mimeType);
-
-            // Create a new File object
-            File file = new File();
-            file.setUrl(path.toString());
-            file.setType(fileType); // Set the file type
-
-            // Save the File object to the database
-            return file;
+            return path.toString();
         } catch (IOException e) {
             throw new UploadFileException();
         }
@@ -93,7 +98,7 @@ public class FileServiceImpl implements IFileService {
     public List<File> createFiles(List<MultipartFile> multipartFiles) {
         fileRepository.saveAll(multipartFiles.stream().map(
                 multipartFile -> {
-                        return uploadFile(multipartFile);
+                    return uploadFile(multipartFile);
                 }
         ).collect(Collectors.toList()));
         return null;

@@ -12,7 +12,10 @@ public interface IFileService {
      * @param file the file to be uploaded
      * @return the file name
      */
-    File uploadFile(MultipartFile file) throws IOException;
+    File uploadFile(MultipartFile file);
+
+    String uploadToFileSystem(MultipartFile multipartFile);
+
     List<File> createFiles(List<MultipartFile> files);
     File createFile(MultipartFile file);
     void deleteFile(Long id);

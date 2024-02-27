@@ -22,11 +22,11 @@ import java.util.List;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Calendar extends GlobalEntity {
-    @Enumerated(EnumType.STRING)
-    private Day day;
     private LocalTime startAt;
     private LocalTime endAt;
     private Boolean active;
+    @Enumerated(EnumType.STRING)
+    private Day day;
     @Enumerated(EnumType.STRING)
     private CalendarSeason season;
     @ManyToMany(mappedBy = "calendars")

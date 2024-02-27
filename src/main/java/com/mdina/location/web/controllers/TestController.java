@@ -1,4 +1,4 @@
-package com.mdina.location.web;
+package com.mdina.location.web.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
