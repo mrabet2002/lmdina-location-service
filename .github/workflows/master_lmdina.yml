@@ -48,4 +48,4 @@ jobs:
         app-name: 'lmdina'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_4fc0df6ef249447c8977d0f59fe72120 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_f3c61e963a6e48e1bf66a832e4c9df84 }}/lmdina-location-service:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_f3c61e963a6e48e1bf66a832e4c9df84 }}/lmdina-location-service:latest'
