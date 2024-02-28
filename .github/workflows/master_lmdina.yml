@@ -36,16 +36,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'lmdina'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4fc0df6ef249447c8977d0f59fe72120 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_f3c61e963a6e48e1bf66a832e4c9df84 }}/lmdina-location-service:latest'
+      - name: Deploy to Ilyas Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker pull mrabet2002/lmdina-location-service:latest
+            docker stop lmdina-location-service || true
+            docker rm lmdina-location-service || true
+            docker run -d --name lmdina-location-service -p 8761:8080 mrabet2002/lmdina-location-service:latest
