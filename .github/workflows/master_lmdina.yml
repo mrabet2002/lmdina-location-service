@@ -49,4 +49,4 @@ jobs:
             docker pull mrabet2002/lmdina-location-service:latest
             docker stop lmdina-location-service || true
             docker rm lmdina-location-service || true
-            docker run -d --name lmdina-location-service -p 8761:8080 mrabet2002/lmdina-location-service:latest
+            docker run -d --name lmdina-location-service -p 8082:8080 mrabet2002/lmdina-location-service:latest
