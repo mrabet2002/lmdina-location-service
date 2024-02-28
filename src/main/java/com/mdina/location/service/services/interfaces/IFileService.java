@@ -3,7 +3,6 @@ package com.mdina.location.service.services.interfaces;
 import com.mdina.location.dao.entities.File;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface IFileService {
@@ -19,6 +18,6 @@ public interface IFileService {
     List<File> createFiles(List<MultipartFile> files);
     File createFile(MultipartFile file);
     void deleteFile(Long id);
-    void updateFile(Long id, byte[] file);
+    void updateFile(Long id, MultipartFile file);
     File getFile(Long id);
 }

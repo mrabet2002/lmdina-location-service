@@ -64,7 +64,7 @@ public class FileServiceImpl implements IFileService {
     }
 
     private Path writeToFileSystem(byte[] bytes, String newFileName) throws IOException {
-        Path path = Paths.get(fileConfig.getUploadPath() + newFileName);
+        Path path = Paths.get(fileConfig.getUploadPath() + "/" + newFileName);
         Files.write(path, bytes);
         return path;
     }
@@ -97,9 +97,7 @@ public class FileServiceImpl implements IFileService {
     @Override
     public List<File> createFiles(List<MultipartFile> multipartFiles) {
         fileRepository.saveAll(multipartFiles.stream().map(
-                multipartFile -> {
-                    return uploadFile(multipartFile);
-                }
+                this::uploadFile
         ).collect(Collectors.toList()));
         return null;
     }
@@ -123,7 +121,7 @@ public class FileServiceImpl implements IFileService {
     }
 
     @Override
-    public void updateFile(Long id, byte[] file) {
+    public void updateFile(Long id, MultipartFile file) {
 
     }
 
@@ -133,4 +131,5 @@ public class FileServiceImpl implements IFileService {
                 () -> new RuntimeException("File not found")
         );
     }
+
 }

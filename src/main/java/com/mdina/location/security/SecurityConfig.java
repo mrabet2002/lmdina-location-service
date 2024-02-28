@@ -54,7 +54,9 @@ public class SecurityConfig {
                         authorize -> authorize
                                 .requestMatchers(
                                         apiConfig.getVersion()+"/test/**").permitAll()
-                                .anyRequest().authenticated()
+                                .requestMatchers(
+                                        apiConfig.getVersion()+"/locations/**").permitAll()
+                                .anyRequest().permitAll()
                 )
 
                 // Setting the session management type to stateless
